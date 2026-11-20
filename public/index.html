@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masofly — IT, Dizayn va Masofaviy Freelance Platformasi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            pal: {
+              bg: '#F4F7F8',
+              dark: '#01151A',
+              darker: '#01151A',
+              petrol: '#003A48',
+              teal: '#007792',
+              tealHover: '#003A48',
+              sand: '#B51B06',
+              sandLight: '#FDECE8',
+              borderGray: '#C8C8C8',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in { animation: fadeSlideUp 0.22s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-pal-bg text-pal-dark dark:bg-pal-darker dark:text-pal-bg transition-colors duration-200 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-40 border-b border-[#22333B]/10 dark:border-[#EFF3F1]/10 bg-[#F4F7F8]/90 dark:bg-pal-darker/90 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <!-- Brand -->
+      <button id="brandBtn" class="flex items-center gap-2.5 text-left group focus:outline-none">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-pal-dark to-pal-teal flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
+          <i data-lucide="briefcase" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-extrabold text-lg tracking-tight">Masofly</span>
+            <span class="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-pal-sandLight text-pal-dark dark:bg-pal-sand/20 dark:text-[#67D5F2]">Beta</span>
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block leading-none">IT &amp; Freelance • Telegram Integratsiya</p>
+        </div>
+      </button>
+
+      <!-- Desktop Nav Tabs -->
+      <nav class="hidden md:flex items-center gap-1 bg-[#E5EAEC] dark:bg-pal-petrol/40 p-1 rounded-xl border border-slate-200/60 dark:border-slate-800">
+        <button data-view="jobs" class="nav-tab px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all bg-white dark:bg-pal-teal text-slate-900 dark:text-white shadow-sm">
+          Vakansiyalar
+        </button>
+        <button data-view="miniapp" class="nav-tab px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5">
+          <i data-lucide="smartphone" class="w-4 h-4 text-pal-teal"></i>
+          Telegram Mini App
+        </button>
+        <button data-view="saved" class="nav-tab px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5">
+          Saqlanganlar
+          <span id="savedBadge" class="px-1.5 py-0.5 text-[11px] font-semibold rounded-full bg-pal-teal/15 text-pal-dark dark:bg-pal-teal/30 dark:text-pal-bg">0</span>
+        </button>
+      </nav>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-2">
+        <button id="themeToggle" title="Mavzuni almashtirish" class="p-2 rounded-xl border border-[#22333B]/10 dark:border-[#EFF3F1]/10 bg-white dark:bg-pal-dark text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+          <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+          <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-amber-400"></i>
+        </button>
+        <button id="openAuthBtn" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-[#22333B]/15 dark:border-[#EFF3F1]/15 bg-white dark:bg-pal-dark text-pal-dark dark:text-pal-bg text-xs font-semibold hover:bg-slate-100 dark:hover:bg-pal-petrol transition-colors">
+          <i data-lucide="user" class="w-3.5 h-3.5 text-pal-teal"></i>
+          <span id="authBtnLabel">Kirish</span>
+        </button>
+        <button id="openPostModalBtn" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-pal-teal hover:bg-pal-tealHover text-white text-sm font-semibold shadow-sm transition-colors">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          <span>E'lon berish</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div class="md:hidden border-t border-slate-200/70 dark:border-slate-800/70 px-4 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar">
+      <button data-view="jobs" class="nav-tab-mobile px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap bg-pal-teal text-white">Vakansiyalar</button>
+      <button data-view="miniapp" class="nav-tab-mobile px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap bg-[#E5EAEC] dark:bg-pal-petrol/40 text-slate-700 dark:text-slate-300 flex items-center gap-1">
+        <i data-lucide="smartphone" class="w-3.5 h-3.5 text-pal-teal"></i> TG Mini App
+      </button>
+      <button data-view="saved" class="nav-tab-mobile px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap bg-[#E5EAEC] dark:bg-pal-petrol/40 text-slate-700 dark:text-slate-300">
+        Saqlanganlar (<span id="savedBadgeMobile">0</span>)
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+    <!-- VIEW 1: JOBS & SAVED -->
+    <section id="jobsView" class="space-y-6">
+      <!-- Hero Banner -->
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-pal-dark via-pal-petrol to-pal-darker text-pal-bg p-6 sm:p-8 shadow-lg border border-pal-teal/30">
+        <div class="absolute -right-16 -top-16 w-64 h-64 bg-pal-teal/25 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-pal-sand/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-3xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-medium text-[#67D5F2]">
+            <span class="w-2 h-2 rounded-full bg-pal-sand animate-pulse"></span>
+            O'zbekistondagi IT, dizayn va masofaviy loyihalar
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+            Ko'nikmangizga mos <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#5ED3F3] to-[#A8E6F5]">masofaviy ish</span> va freelance buyurtmalarni toping
+          </h1>
+          <p class="text-sm sm:text-base text-slate-300 max-w-2xl">
+            Ortiqcha anketalarsiz — vakansiyani tanlang va Telegram bot orqali 1 klikda ariza yuboring.
+          </p>
+
+          <!-- Search Bar -->
+          <div class="pt-1 flex flex-col sm:flex-row gap-2.5">
+            <div class="relative flex-1">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+              <input id="searchInput" type="text" placeholder="Masalan: React, Figma, Telegram bot, Python..." class="w-full pl-10 pr-4 py-3 rounded-xl bg-white text-slate-900 placeholder-slate-400 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-pal-sand" />
+            </div>
+            <button id="clearFiltersBtn" class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-medium border border-white/15 transition-colors whitespace-nowrap">
+              Filtrlarni tozalash
+            </button>
+          </div>
+
+          <!-- Quick Skill Chips -->
+          <div class="flex flex-wrap items-center gap-1.5 pt-1">
+            <span class="text-xs text-slate-400 mr-1">Mashhur teglar:</span>
+            <button class="quick-tag px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium text-slate-200 transition-colors" data-tag="React">React</button>
+            <button class="quick-tag px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium text-slate-200 transition-colors" data-tag="Figma">Figma</button>
+            <button class="quick-tag px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium text-slate-200 transition-colors" data-tag="Node.js">Node.js</button>
+            <button class="quick-tag px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium text-slate-200 transition-colors" data-tag="Telegram Bot">Telegram Bot</button>
+            <button class="quick-tag px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium text-slate-200 transition-colors" data-tag="AI">AI / Prompt</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="p-4 rounded-xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10">
+          <div class="text-xs text-slate-500 dark:text-slate-400">Ochiq vakansiyalar</div>
+          <div id="statTotal" class="text-2xl font-bold mt-1">0</div>
+        </div>
+        <div class="p-4 rounded-xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10">
+          <div class="text-xs text-slate-500 dark:text-slate-400">Masofaviy (Remote)</div>
+          <div id="statRemote" class="text-2xl font-bold mt-1 text-pal-teal dark:text-[#84B5A7]">0%</div>
+        </div>
+        <div class="p-4 rounded-xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10">
+          <div class="text-xs text-slate-500 dark:text-slate-400">O'rtacha byudjet</div>
+          <div id="statAvgBudget" class="text-2xl font-bold mt-1 text-pal-teal dark:text-[#67D5F2]">$0</div>
+        </div>
+        <div class="p-4 rounded-xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10">
+          <div class="text-xs text-slate-500 dark:text-slate-400">Yuborilgan arizalar</div>
+          <div id="statApplied" class="text-2xl font-bold mt-1 text-[#67D5F2]">0</div>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-1">
+        <!-- Categories -->
+        <div id="categoryTabs" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 lg:pb-0">
+          <button data-cat="all" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-pal-dark text-pal-bg dark:bg-pal-teal dark:text-white">Barchasi</button>
+          <button data-cat="Dasturlash" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Dasturlash</button>
+          <button data-cat="UI/UX Dizayn" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">UI/UX Dizayn</button>
+          <button data-cat="Telegram Bot" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">Telegram Bot</button>
+          <button data-cat="AI & Data" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">AI &amp; Data</button>
+          <button data-cat="SMM & Kontent" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">SMM &amp; Kontent</button>
+        </div>
+
+        <!-- Toggles & Sort -->
+        <div class="flex flex-wrap items-center gap-2.5">
+          <label class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-xs font-medium cursor-pointer select-none">
+            <input id="remoteOnlyToggle" type="checkbox" class="rounded text-pal-teal focus:ring-pal-teal" />
+            <span>Faqat masofaviy</span>
+          </label>
+          <label class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-xs font-medium cursor-pointer select-none">
+            <input id="juniorToggle" type="checkbox" class="rounded text-pal-teal focus:ring-pal-teal" />
+            <span>Junior / Stajirovka</span>
+          </label>
+          <select id="sortSelect" class="px-3 py-2 rounded-xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-pal-teal">
+            <option value="newest">Eng yangilari</option>
+            <option value="budget_desc">Yuqori byudjet</option>
+            <option value="match_desc">AI Moslik (%)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Saved View Header (hidden unless in saved mode) -->
+      <div id="savedHeader" class="hidden flex items-center justify-between p-4 rounded-xl bg-pal-sandLight/70 dark:bg-pal-dark border border-pal-sand/40 dark:border-pal-sand/30">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="bookmark" class="w-5 h-5 text-pal-teal dark:text-[#67D5F2]"></i>
+          <div>
+            <h2 class="font-bold text-sm">Saqlangan vakansiyalar</h2>
+            <p class="text-xs text-slate-600 dark:text-slate-400">Keyinroq ko'rib chiqish uchun belgilab qo'yilgan e'lonlar</p>
+          </div>
+        </div>
+        <button id="backToAllBtn" class="text-xs font-semibold text-pal-teal dark:text-[#67D5F2] hover:underline">Barcha ishlarga qaytish</button>
+      </div>
+
+      <!-- Jobs Grid -->
+      <div id="jobsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden text-center py-14 px-4 rounded-2xl bg-white dark:bg-pal-dark border border-dashed border-slate-300 dark:border-slate-700">
+        <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-3 text-slate-400">
+          <i data-lucide="search-x" class="w-6 h-6"></i>
+        </div>
+        <h3 class="font-bold text-base">Mos vakansiya topilmadi</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Qidiruv so'zini o'zgartirib ko'ring yoki filtrlarni tozalang.</p>
+        <button id="emptyResetBtn" class="mt-4 px-4 py-2 rounded-xl bg-pal-teal text-white text-xs font-semibold hover:bg-indigo-700 transition-colors">
+          Barchasini ko'rsatish
+        </button>
+      </div>
+    </section>
+
+    <!-- VIEW 2: TELEGRAM MINI APP SIMULATOR -->
+    <section id="miniappView" class="hidden space-y-6 animate-in">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Left Info -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-xs font-semibold">
+            <i data-lucide="send" class="w-3.5 h-3.5"></i>
+            Telegram Bot + Mini App
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            Sayt va Telegram — yagona ekotizim
+          </h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            O'zbekistonda ish beruvchilar ham, frilanserlar ham kunning katta qismini Telegramda o'tkazadi. Shu sababli <strong>Masofly</strong> bir vaqtning o'zida ham veb-sayt, ham Telegram Mini App sifatida ishlaydi.
+          </p>
+
+          <div class="space-y-3 pt-1">
+            <div class="p-4 rounded-xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 flex gap-3">
+              <div class="w-9 h-9 rounded-lg bg-sky-100 dark:bg-sky-950 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                <i data-lucide="bell-ring" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-sm">Darhol xabarnoma (Push)</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Sizning stekingizga mos yangi buyurtma tushishi bilan bot darhol yozadi.</p>
+              </div>
+            </div>
+            <div class="p-4 rounded-xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 flex gap-3">
+              <div class="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-pal-teal dark:text-[#84B5A7] flex items-center justify-center shrink-0">
+                <i data-lucide="zap" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-sm">Parolsiz kirish (Telegram Auth)</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Ro'yxatdan o'tish shart emas — Telegram profilingiz bilan 1 soniyada kirasiz.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-900 text-slate-100 space-y-2.5">
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Bot simulyatsiyasi</div>
+            <p class="text-xs text-slate-300">O'ngdagi telefon ekranida Mini App'ni sinab ko'ring yoki test bildirishnoma yuboring:</p>
+            <button id="simulatePushBtn" class="w-full py-2.5 px-4 rounded-xl bg-pal-teal hover:bg-pal-tealHover text-white text-xs font-semibold transition-colors flex items-center justify-center gap-2">
+              <i data-lucide="bell" class="w-4 h-4"></i>
+              Yangi vakansiya xabarnomasini sinash
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Phone Mockup -->
+        <div class="lg:col-span-7 flex justify-center">
+          <div class="w-full max-w-[360px] rounded-[2.5rem] border-[8px] border-slate-900 dark:border-slate-800 bg-slate-100 dark:bg-slate-950 shadow-2xl overflow-hidden">
+            <!-- Phone Notch / Top Bar -->
+            <div class="bg-slate-900 text-white px-5 pt-3 pb-3 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-sky-400 to-indigo-500 flex items-center justify-center text-xs font-bold">IT</div>
+                <div>
+                  <div class="text-xs font-bold leading-tight">Masofly Mini App</div>
+                  <div class="text-[10px] text-sky-300 leading-tight">@masofly_uz_bot</div>
+                </div>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-medium">Online</span>
+            </div>
+
+            <!-- Mini App Body -->
+            <div class="p-3.5 space-y-3 max-h-[520px] overflow-y-auto no-scrollbar">
+              <!-- Bot Notification Banner -->
+              <div id="tgPushBanner" class="hidden p-3 rounded-xl bg-pal-teal text-white text-xs space-y-1 animate-in">
+                <div class="flex items-center justify-between font-bold">
+                  <span>🔔 Yangi mos buyurtma!</span>
+                  <span class="text-[10px] opacity-80">hozirgina</span>
+                </div>
+                <p class="opacity-95">Next.js + Tailwind landing sahifa ($250) — 96% moslik.</p>
+              </div>
+
+              <!-- Mini App Search -->
+              <div class="relative">
+                <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                <input id="tgMiniSearch" type="text" placeholder="Mini App ichidan qidirish..." class="w-full pl-8 pr-3 py-2 rounded-xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500" />
+              </div>
+
+              <!-- Mini App List -->
+              <div id="tgMiniList" class="space-y-2.5"></div>
+            </div>
+
+            <!-- Phone Bottom Bar -->
+            <div class="bg-white dark:bg-pal-dark border-t border-[#22333B]/10 dark:border-[#EFF3F1]/10 px-4 py-2.5 flex items-center justify-around text-[11px] font-medium text-slate-500">
+              <button class="text-sky-600 dark:text-sky-400 flex flex-col items-center gap-0.5" data-mini-tab="feed">
+                <i data-lucide="compass" class="w-4 h-4"></i>
+                <span>Lenta</span>
+              </button>
+              <button class="hover:text-slate-900 dark:hover:text-white flex flex-col items-center gap-0.5" id="tgSwitchToWebBtn">
+                <i data-lucide="globe" class="w-4 h-4"></i>
+                <span>Veb-versiya</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-[#22333B]/10 dark:border-[#EFF3F1]/10 bg-white/70 dark:bg-pal-darker py-6 mt-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-slate-800 dark:text-slate-200">Masofly</span>
+        <span>•</span>
+        <span>IT, Dizayn va Masofaviy Freelance UI Prototipi</span>
+      </div>
+      <div>Veb-sayt + Telegram Mini App konsepsiyasi</div>
+    </div>
+  </footer>
+
+  <!-- Job Detail & Quick Apply Modal -->
+  <div id="jobModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm">
+    <div class="w-full max-w-xl rounded-2xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 shadow-2xl overflow-hidden animate-in max-h-[90vh] flex flex-col">
+      <div class="p-5 border-b border-[#22333B]/10 dark:border-[#EFF3F1]/10 flex items-start justify-between gap-3">
+        <div>
+          <div id="modalCategory" class="text-xs font-semibold text-pal-teal dark:text-[#67D5F2] mb-1"></div>
+          <h3 id="modalTitle" class="text-lg font-extrabold leading-snug"></h3>
+          <p id="modalCompany" class="text-xs text-slate-500 dark:text-slate-400 mt-1"></p>
+        </div>
+        <button id="closeJobModalBtn" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-5 space-y-4 overflow-y-auto">
+        <div class="flex flex-wrap gap-2">
+          <span id="modalBudget" class="px-3 py-1 rounded-lg bg-pal-teal/15 dark:bg-pal-teal/25 text-pal-teal dark:text-[#9CC4B8] text-xs font-bold"></span>
+          <span id="modalType" class="px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-medium"></span>
+          <span id="modalMatch" class="px-3 py-1 rounded-lg bg-pal-sandLight dark:bg-pal-sand/20 text-[#8A6642] dark:text-[#67D5F2] text-xs font-semibold"></span>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Vazifa tavsifi</h4>
+          <p id="modalDesc" class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed"></p>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Kerakli ko'nikmalar</h4>
+          <div id="modalTags" class="flex flex-wrap gap-1.5"></div>
+        </div>
+
+        <!-- Quick Apply Form -->
+        <form id="applyForm" class="pt-3 border-t border-[#22333B]/10 dark:border-[#EFF3F1]/10 space-y-3">
+          <h4 class="text-sm font-bold flex items-center gap-1.5">
+            <i data-lucide="send" class="w-4 h-4 text-pal-teal"></i>
+            Telegram orqali tezkor ariza
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <input id="applyName" type="text" required placeholder="Ismingiz" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-pal-teal" />
+            <input id="applyTg" type="text" required placeholder="Telegram (@username)" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-pal-teal" />
+          </div>
+          <input id="applyPortfolio" type="url" placeholder="Portfolio yoki GitHub havola (ixtiyoriy)" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-pal-teal" />
+          <textarea id="applyNote" rows="2" placeholder="Qisqacha izoh: nima uchun bu loyiha sizga mos?" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-pal-teal"></textarea>
+          <button id="submitApplyBtn" type="submit" class="w-full py-2.5 rounded-xl bg-pal-teal hover:bg-pal-tealHover text-white text-sm font-semibold transition-colors">
+            Ariza yuborish
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post a Job Modal -->
+  <div id="postModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm">
+    <div class="w-full max-w-lg rounded-2xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 shadow-2xl overflow-hidden animate-in">
+      <div class="p-5 border-b border-[#22333B]/10 dark:border-[#EFF3F1]/10 flex items-center justify-between">
+        <h3 class="text-lg font-extrabold">Yangi vakansiya joylash</h3>
+        <button id="closePostModalBtn" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <form id="postJobForm" class="p-5 space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold mb-1">Sarlavha</label>
+          <input id="postTitle" type="text" required placeholder="Masalan: Frontend React dasturchi kerak" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-pal-teal" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold mb-1">Yo'nalish</label>
+            <select id="postCategory" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+              <option value="Dasturlash">Dasturlash</option>
+              <option value="UI/UX Dizayn">UI/UX Dizayn</option>
+              <option value="Telegram Bot">Telegram Bot</option>
+              <option value="AI & Data">AI &amp; Data</option>
+              <option value="SMM & Kontent">SMM &amp; Kontent</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1">Byudjet (USD)</label>
+            <input id="postBudget" type="number" min="20" step="10" required placeholder="300" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold mb-1">Kompaniya / Buyurtmachi</label>
+            <input id="postCompany" type="text" required placeholder="TechLab UZ" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1">Teglar (vergul bilan)</label>
+            <input id="postTags" type="text" placeholder="React, Tailwind, API" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Tavsif</label>
+          <textarea id="postDesc" rows="3" required placeholder="Loyiha haqida qisqacha ma'lumot..." class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm"></textarea>
+        </div>
+        <div class="flex items-center gap-4 text-xs font-medium">
+          <label class="inline-flex items-center gap-2 cursor-pointer">
+            <input id="postRemote" type="checkbox" checked class="rounded text-indigo-600" />
+            <span>Masofaviy (Remote)</span>
+          </label>
+          <label class="inline-flex items-center gap-2 cursor-pointer">
+            <input id="postJunior" type="checkbox" class="rounded text-indigo-600" />
+            <span>Junior uchun mos</span>
+          </label>
+        </div>
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-pal-teal hover:bg-pal-tealHover text-white text-sm font-semibold transition-colors">
+          E'lonni chop etish
+        </button>
+      </form>
+    </div>
+  </div>
+
+    <!-- Auth Modal (Log In / Sign Up) -->
+  <div id="authModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm">
+    <div class="w-full max-w-md rounded-2xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 shadow-2xl overflow-hidden animate-in">
+      <div class="p-5 border-b border-[#22333B]/10 dark:border-[#EFF3F1]/10 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pal-dark to-pal-teal flex items-center justify-center text-white">
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+          </div>
+          <h3 class="text-base font-extrabold">Masofly hisobiga kirish</h3>
+        </div>
+        <button id="closeAuthModalBtn" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-5 space-y-4">
+        <!-- Auth Tabs -->
+        <div class="grid grid-cols-2 gap-1 p-1 rounded-xl bg-[#E5EAEC] dark:bg-pal-darker">
+          <button id="tabLoginBtn" class="py-2 rounded-lg text-xs font-bold bg-white dark:bg-pal-teal text-pal-dark dark:text-white shadow-sm transition-all">Kirish (Log In)</button>
+          <button id="tabSignupBtn" class="py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 transition-all">Ro'yxatdan o'tish</button>
+        </div>
+
+        <div id="authErrorBox" class="hidden p-3 rounded-xl bg-pal-sandLight text-pal-sand text-xs font-semibold"></div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="space-y-3">
+          <div>
+            <label class="block text-xs font-semibold mb-1">Email</label>
+            <input id="loginEmail" type="email" required placeholder="ism@example.com" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-sm focus:outline-none focus:ring-2 focus:ring-pal-teal" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1">Parol</label>
+            <input id="loginPassword" type="password" required placeholder="••••••••" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-sm focus:outline-none focus:ring-2 focus:ring-pal-teal" />
+          </div>
+          <button type="submit" class="w-full py-2.5 rounded-xl bg-pal-teal hover:bg-pal-tealHover text-white text-sm font-semibold transition-colors">
+            Kirish
+          </button>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="signupForm" class="hidden space-y-3">
+          <div>
+            <label class="block text-xs font-semibold mb-1">Ism va familiya</label>
+            <input id="signupName" type="text" required placeholder="Alisher Karimov" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-sm focus:outline-none focus:ring-2 focus:ring-pal-teal" />
+          </div>
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-xs font-semibold mb-1">Email</label>
+              <input id="signupEmail" type="email" required placeholder="ism@mail.uz" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-sm focus:outline-none focus:ring-2 focus:ring-pal-teal" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold mb-1">Telegram</label>
+              <input id="signupTg" type="text" placeholder="@username" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-sm focus:outline-none focus:ring-2 focus:ring-pal-teal" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1">Parol (kamida 6 ta belgi)</label>
+            <input id="signupPassword" type="password" minlength="6" required placeholder="••••••••" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-sm focus:outline-none focus:ring-2 focus:ring-pal-teal" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1">Rolingiz</label>
+            <select id="signupRole" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-sm">
+              <option value="freelancer">Frilanser (ish qidiryapman)</option>
+              <option value="employer">Buyurtmachi (mutaxassis kerak)</option>
+            </select>
+          </div>
+          <button type="submit" class="w-full py-2.5 rounded-xl bg-pal-teal hover:bg-pal-tealHover text-white text-sm font-semibold transition-colors">
+            Ro'yxatdan o'tish
+          </button>
+        </form>
+
+        <!-- Divider & Quick Telegram Demo -->
+        <div class="pt-2 border-t border-[#22333B]/10 dark:border-[#EFF3F1]/10">
+          <button id="tgQuickDemoBtn" type="button" class="w-full py-2.5 rounded-xl border border-pal-teal/30 bg-pal-teal/10 hover:bg-pal-teal/20 text-pal-dark dark:text-pal-bg text-xs font-semibold transition-colors flex items-center justify-center gap-2">
+            <i data-lucide="send" class="w-3.5 h-3.5 text-pal-teal"></i>
+            Telegram (@masofly_bot) orqali tezkor kirish
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="hidden fixed bottom-5 right-5 z-50 max-w-sm px-4 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold shadow-xl flex items-center gap-2.5 animate-in">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 dark:text-emerald-600 shrink-0"></i>
+    <span id="toastMsg"></span>
+  </div>
+
+  <script>
+    const initialJobs = [
+      {
+        id: 'job-1',
+        title: 'Next.js & Tailwind CSS Landing Sahifa Yasash',
+        company: 'FinTech Startap • Toshkent',
+        category: 'Dasturlash',
+        budget: 350,
+        budgetLabel: '$350 • Loyiha',
+        remote: true,
+        junior: false,
+        match: 96,
+        verified: true,
+        postedAt: '15 daqiqa oldin',
+        tags: ['React', 'Next.js', 'Tailwind', 'Responsive'],
+        desc: "Yangi to'lov ilovasi uchun tezkor, animatsiyali va mobilga mos landing sahifa kerak. Figma dizayn tayyor, faqat toza kod va tez yuklanish talab qilinadi."
+      },
+      {
+        id: 'job-2',
+        title: 'Telegram Mini App & To\'lov Boti (Node.js)',
+        company: 'EduMarket • Masofaviy',
+        category: 'Telegram Bot',
+        budget: 450,
+        budgetLabel: '$450 • Loyiha',
+        remote: true,
+        junior: false,
+        match: 94,
+        verified: true,
+        postedAt: '1 soat oldin',
+        tags: ['Node.js', 'Telegram Bot', 'WebApp', 'MongoDB'],
+        desc: "Kurslar sotiladigan Telegram Mini App katalogi va admin paneli kerak. Click/Payme webhook integratsiyasi bo'lsa juda yaxshi."
+      },
+      {
+        id: 'job-3',
+        title: 'SaaS Dashboard uchun UI/UX Dizayn (Figma)',
+        company: 'CloudMetrics • Masofaviy',
+        category: 'UI/UX Dizayn',
+        budget: 280,
+        budgetLabel: '$280 • Loyiha',
+        remote: true,
+        junior: true,
+        match: 89,
+        verified: true,
+        postedAt: '2 soat oldin',
+        tags: ['Figma', 'UI/UX', 'Design System', 'Dark Mode'],
+        desc: "Analitika platformasi uchun 8 ta asosiy ekranning zamonaviy light/dark dizaynini chizib berish kerak. Junior/Middle dizaynerlar ham topshirishi mumkin."
+      },
+      {
+        id: 'job-4',
+        title: 'AI Chatbot & Hujjat Tahlilchi (Gemini / OpenAI API)',
+        company: 'LegalTech Lab • Masofaviy',
+        category: 'AI & Data',
+        budget: 500,
+        budgetLabel: '$500 • Loyiha',
+        remote: true,
+        junior: false,
+        match: 92,
+        verified: true,
+        postedAt: '3 soat oldin',
+        tags: ['AI', 'Python', 'FastAPI', 'Prompt Engineering'],
+        desc: "PDF shartnomalarni o'qib, asosiy xatarlarni o'zbek tilida ajratib beradigan web-yordamchi yaratish."
+      },
+      {
+        id: 'job-5',
+        title: 'Junior Frontend Stajirovka (HTML/CSS/JS)',
+        company: 'Andijon Digital Hub',
+        category: 'Dasturlash',
+        budget: 200,
+        budgetLabel: '$200/oy • Part-time',
+        remote: true,
+        junior: true,
+        match: 91,
+        verified: true,
+        postedAt: '5 soat oldin',
+        tags: ['HTML5', 'Tailwind', 'JavaScript', 'Git'],
+        desc: "O'quvchilar va talabalar uchun moslashuvchan grafikdagi amaliyot. Real loyihalarda mentor bilan ishlash imkoniyati."
+      },
+      {
+        id: 'job-6',
+        title: 'IT Kanal va Loyiha Uchun Motion / Reels Montaj',
+        company: 'Prompted Studio • Masofaviy',
+        category: 'SMM & Kontent',
+        budget: 180,
+        budgetLabel: '$180 • 10 ta video',
+        remote: true,
+        junior: true,
+        match: 85,
+        verified: false,
+        postedAt: 'Kecha',
+        tags: ['CapCut', 'After Effects', 'Reels', 'Dizayn'],
+        desc: "Texnologiya va AI mavzusidagi qisqa videolar uchun dinamik subtitr va vizual effektlar qo'shish."
+      }
+    ];
+
+    let state = {
+      jobs: [...initialJobs],
+      savedIds: new Set(),
+      appliedIds: new Set(),
+      view: 'jobs', // 'jobs' | 'saved' | 'miniapp'
+      category: 'all',
+      search: '',
+      remoteOnly: false,
+      juniorOnly: false,
+      sort: 'newest',
+      activeJobId: null,
+      tgConnected: false
+    };
+
+    try {
+      const saved = localStorage.getItem('masofly_saved');
+      if (saved) state.savedIds = new Set(JSON.parse(saved));
+      const applied = localStorage.getItem('masofly_applied');
+      if (applied) state.appliedIds = new Set(JSON.parse(applied));
+      if (localStorage.getItem('masofly_theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    } catch (e) {}
+
+    function persistState() {
+      try {
+        localStorage.setItem('masofly_saved', JSON.stringify([...state.savedIds]));
+        localStorage.setItem('masofly_applied', JSON.stringify([...state.appliedIds]));
+      } catch (e) {}
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.remove('hidden');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.classList.add('hidden'), 3000);
+    }
+
+    function getFilteredJobs() {
+      let list = state.jobs.filter(job => {
+        if (state.view === 'saved' && !state.savedIds.has(job.id)) return false;
+        if (state.category !== 'all' && job.category !== state.category) return false;
+        if (state.remoteOnly && !job.remote) return false;
+        if (state.juniorOnly && !job.junior) return false;
+        if (state.search.trim()) {
+          const q = state.search.toLowerCase();
+          const hay = (job.title + ' ' + job.company + ' ' + job.category + ' ' + job.tags.join(' ')).toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      if (state.sort === 'budget_desc') {
+        list.sort((a, b) => b.budget - a.budget);
+      } else if (state.sort === 'match_desc') {
+        list.sort((a, b) => b.match - a.match);
+      }
+      return list;
+    }
+
+    function renderStats() {
+      const total = state.jobs.length;
+      const remotePct = total ? Math.round((state.jobs.filter(j => j.remote).length / total) * 100) : 0;
+      const avg = total ? Math.round(state.jobs.reduce((s, j) => s + j.budget, 0) / total) : 0;
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statRemote').textContent = remotePct + '%';
+      document.getElementById('statAvgBudget').textContent = '$' + avg;
+      document.getElementById('statApplied').textContent = state.appliedIds.size;
+      document.getElementById('savedBadge').textContent = state.savedIds.size;
+      document.getElementById('savedBadgeMobile').textContent = state.savedIds.size;
+    }
+
+    function renderJobs() {
+      const grid = document.getElementById('jobsGrid');
+      const empty = document.getElementById('emptyState');
+      const list = getFilteredJobs();
+
+      if (list.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+      } else {
+        empty.classList.add('hidden');
+        grid.innerHTML = list.map(job => {
+          const isSaved = state.savedIds.has(job.id);
+          const isApplied = state.appliedIds.has(job.id);
+          return `
+            <article class="group p-5 rounded-2xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 hover:border-pal-teal dark:hover:border-pal-teal shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-4">
+              <div class="space-y-3">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="px-2.5 py-0.5 rounded-lg text-[11px] font-semibold bg-pal-teal/15 text-pal-dark dark:bg-pal-teal/25 dark:text-pal-bg">${job.category}</span>
+                    ${job.remote ? '<span class="px-2 py-0.5 rounded-lg text-[11px] font-medium bg-pal-teal/15 text-pal-teal dark:bg-pal-teal/25 dark:text-[#9CC4B8]">Masofaviy</span>' : ''}
+                    ${job.junior ? '<span class="px-2 py-0.5 rounded-lg text-[11px] font-medium bg-pal-sandLight text-[#8A6642] dark:bg-pal-sand/20 dark:text-[#67D5F2]">Junior</span>' : ''}
+                  </div>
+                  <button data-save-id="${job.id}" class="save-btn p-1.5 rounded-lg border border-[#22333B]/10 dark:border-[#EFF3F1]/10 ${isSaved ? 'text-pal-teal bg-pal-teal/15 dark:bg-pal-teal/25 dark:text-[#67D5F2]' : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}" title="Saqlash">
+                    <i data-lucide="bookmark" class="w-4 h-4 ${isSaved ? 'fill-current' : ''}"></i>
+                  </button>
+                </div>
+
+                <div>
+                  <h3 class="font-bold text-base sm:text-lg leading-snug group-hover:text-pal-teal dark:group-hover:text-[#67D5F2] transition-colors cursor-pointer job-open-trigger" data-job-id="${job.id}">
+                    ${job.title}
+                  </h3>
+                  <div class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    <span>${job.company}</span>
+                    ${job.verified ? '<i data-lucide="badge-check" class="w-3.5 h-3.5 text-pal-teal"></i>' : ''}
+                    <span>•</span>
+                    <span>${job.postedAt}</span>
+                  </div>
+                </div>
+
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-2">${job.desc}</p>
+
+                <div class="flex flex-wrap gap-1.5">
+                  ${job.tags.map(t => `<span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-medium">${t}</span>`).join('')}
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+                <div>
+                  <div class="text-sm font-extrabold text-slate-900 dark:text-white">${job.budgetLabel}</div>
+                  <div class="text-[11px] text-pal-teal dark:text-[#67D5F2] font-semibold">AI moslik: ${job.match}%</div>
+                </div>
+                <button data-job-id="${job.id}" class="job-open-trigger px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors ${isApplied ? 'bg-pal-teal/15 text-pal-teal dark:bg-pal-teal/25 dark:text-[#9CC4B8] border border-emerald-200 dark:border-emerald-800' : 'bg-pal-dark hover:bg-pal-teal text-pal-bg dark:bg-pal-teal dark:text-white dark:hover:bg-pal-tealHover dark:hover:bg-pal-teal dark:hover:text-white'}">
+                  ${isApplied ? 'Ariza yuborilgan ✓' : 'Batafsil / Topshirish'}
+                </button>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      lucide.createIcons();
+    }
+
+    function renderMiniApp(filterText = '') {
+      const container = document.getElementById('tgMiniList');
+      const q = filterText.toLowerCase();
+      const items = state.jobs.filter(j => !q || (j.title + j.tags.join(' ')).toLowerCase().includes(q));
+      container.innerHTML = items.map(job => {
+        const isApplied = state.appliedIds.has(job.id);
+        return `
+          <div class="p-3 rounded-xl bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 space-y-2">
+            <div class="flex items-start justify-between gap-2">
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300">${job.category}</span>
+              <span class="text-xs font-bold text-pal-teal dark:text-[#84B5A7]">$${job.budget}</span>
+            </div>
+            <div class="font-bold text-xs leading-snug">${job.title}</div>
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-[10px] text-slate-400">${job.postedAt}</span>
+              <button data-job-id="${job.id}" class="job-open-trigger px-2.5 py-1 rounded-lg text-[11px] font-semibold ${isApplied ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-pal-teal text-white hover:bg-pal-tealHover'}">
+                ${isApplied ? 'Yuborildi ✓' : '1-klik ariza'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function switchView(view) {
+      state.view = view;
+      const jobsView = document.getElementById('jobsView');
+      const miniView = document.getElementById('miniappView');
+      const savedHeader = document.getElementById('savedHeader');
+
+      if (view === 'miniapp') {
+        jobsView.classList.add('hidden');
+        miniView.classList.remove('hidden');
+        renderMiniApp(document.getElementById('tgMiniSearch').value);
+      } else {
+        miniView.classList.add('hidden');
+        jobsView.classList.remove('hidden');
+        savedHeader.classList.toggle('hidden', view !== 'saved');
+        renderJobs();
+      }
+
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        const active = btn.dataset.view === view;
+        btn.className = active
+          ? 'nav-tab px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all bg-white dark:bg-pal-teal text-slate-900 dark:text-white shadow-sm flex items-center gap-1.5'
+          : 'nav-tab px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5';
+      });
+
+      document.querySelectorAll('.nav-tab-mobile').forEach(btn => {
+        const active = btn.dataset.view === view;
+        btn.className = active
+          ? 'nav-tab-mobile px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap bg-pal-teal text-white flex items-center gap-1'
+          : 'nav-tab-mobile px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap bg-[#E5EAEC] dark:bg-pal-petrol/40 text-slate-700 dark:text-slate-300 flex items-center gap-1';
+      });
+    }
+
+    function openJobModal(jobId) {
+      const job = state.jobs.find(j => j.id === jobId);
+      if (!job) return;
+      state.activeJobId = jobId;
+      document.getElementById('modalCategory').textContent = job.category;
+      document.getElementById('modalTitle').textContent = job.title;
+      document.getElementById('modalCompany').textContent = `${job.company} • ${job.postedAt}`;
+      document.getElementById('modalBudget').textContent = job.budgetLabel;
+      document.getElementById('modalType').textContent = job.remote ? 'Masofaviy (Remote)' : 'Ofis / Gibrid';
+      document.getElementById('modalMatch').textContent = `AI Moslik: ${job.match}%`;
+      document.getElementById('modalDesc').textContent = job.desc;
+      document.getElementById('modalTags').innerHTML = job.tags.map(t =>
+        `<span class="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-medium">${t}</span>`
+      ).join('');
+
+      const isApplied = state.appliedIds.has(jobId);
+      const submitBtn = document.getElementById('submitApplyBtn');
+      submitBtn.textContent = isApplied ? 'Ariza allaqachon yuborilgan ✓' : 'Telegram orqali ariza yuborish';
+      submitBtn.disabled = isApplied;
+      submitBtn.className = isApplied
+        ? 'w-full py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold opacity-80 cursor-not-allowed'
+        : 'w-full py-2.5 rounded-xl bg-pal-teal hover:bg-pal-tealHover text-white text-sm font-semibold transition-colors';
+
+      document.getElementById('jobModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function resetAllFilters() {
+      state.category = 'all';
+      state.search = '';
+      state.remoteOnly = false;
+      state.juniorOnly = false;
+      state.sort = 'newest';
+      document.getElementById('searchInput').value = '';
+      document.getElementById('remoteOnlyToggle').checked = false;
+      document.getElementById('juniorToggle').checked = false;
+      document.getElementById('sortSelect').value = 'newest';
+      updateCategoryButtons();
+      renderJobs();
+    }
+
+    function updateCategoryButtons() {
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        const active = btn.dataset.cat === state.category;
+        btn.className = active
+          ? 'cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-pal-dark text-pal-bg dark:bg-pal-teal dark:text-white'
+          : 'cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap bg-white dark:bg-pal-dark border border-[#22333B]/10 dark:border-[#EFF3F1]/10 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800';
+      });
+    }
+
+    // Event Listeners
+    document.getElementById('brandBtn').addEventListener('click', () => switchView('jobs'));
+    document.getElementById('backToAllBtn').addEventListener('click', () => switchView('jobs'));
+    document.getElementById('tgSwitchToWebBtn').addEventListener('click', () => switchView('jobs'));
+
+    document.querySelectorAll('.nav-tab, .nav-tab-mobile').forEach(btn => {
+      btn.addEventListener('click', () => switchView(btn.dataset.view));
+    });
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      try { localStorage.setItem('masofly_theme', isDark ? 'dark' : 'light'); } catch (e) {}
+    });
+
+    try {
+      const savedUser = localStorage.getItem('masofly_user');
+      if (savedUser) state.user = JSON.parse(savedUser);
+    } catch (e) {}
+
+    function updateAuthUI() {
+      const lbl = document.getElementById('authBtnLabel');
+      if (state.user) {
+        const shortName = state.user.full_name.split(' ')[0];
+        lbl.textContent = `${shortName} • Chiqish`;
+      } else {
+        lbl.textContent = 'Kirish';
+      }
+    }
+
+    function setAuthUser(user, token) {
+      state.user = user;
+      try {
+        if (user) localStorage.setItem('masofly_user', JSON.stringify(user));
+        else localStorage.removeItem('masofly_user');
+        if (token) localStorage.setItem('masofly_token', token);
+        else localStorage.removeItem('masofly_token');
+      } catch (e) {}
+      updateAuthUI();
+    }
+
+    function switchAuthTab(mode) {
+      const isLogin = mode === 'login';
+      document.getElementById('loginForm').classList.toggle('hidden', !isLogin);
+      document.getElementById('signupForm').classList.toggle('hidden', isLogin);
+      document.getElementById('authErrorBox').classList.add('hidden');
+      document.getElementById('tabLoginBtn').className = isLogin
+        ? 'py-2 rounded-lg text-xs font-bold bg-white dark:bg-pal-teal text-pal-dark dark:text-white shadow-sm transition-all'
+        : 'py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 transition-all';
+      document.getElementById('tabSignupBtn').className = !isLogin
+        ? 'py-2 rounded-lg text-xs font-bold bg-white dark:bg-pal-teal text-pal-dark dark:text-white shadow-sm transition-all'
+        : 'py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-300 transition-all';
+    }
+
+    document.getElementById('openAuthBtn').addEventListener('click', () => {
+      if (state.user) {
+        setAuthUser(null, null);
+        showToast('Hisobdan chiqdingiz.');
+      } else {
+        switchAuthTab('login');
+        document.getElementById('authModal').classList.remove('hidden');
+      }
+    });
+    document.getElementById('closeAuthModalBtn').addEventListener('click', () => {
+      document.getElementById('authModal').classList.add('hidden');
+    });
+    document.getElementById('tabLoginBtn').addEventListener('click', () => switchAuthTab('login'));
+    document.getElementById('tabSignupBtn').addEventListener('click', () => switchAuthTab('signup'));
+
+    document.getElementById('loginForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const errBox = document.getElementById('authErrorBox');
+      errBox.classList.add('hidden');
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          errBox.textContent = data.error || 'Kirishda xatolik.';
+          errBox.classList.remove('hidden');
+          return;
+        }
+        setAuthUser(data.user, data.token);
+      } catch (_) {
+        setAuthUser({ full_name: email.split('@')[0], email, role: 'freelancer' }, 'demo-token');
+      }
+      document.getElementById('authModal').classList.add('hidden');
+      e.target.reset();
+      showToast('Xush kelibsiz!');
+    });
+
+    document.getElementById('signupForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const errBox = document.getElementById('authErrorBox');
+      errBox.classList.add('hidden');
+      const payload = {
+        full_name: document.getElementById('signupName').value.trim(),
+        email: document.getElementById('signupEmail').value.trim(),
+        username: document.getElementById('signupTg').value.trim(),
+        password: document.getElementById('signupPassword').value,
+        role: document.getElementById('signupRole').value
+      };
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          errBox.textContent = data.error || "Ro'yxatdan o'tishda xatolik.";
+          errBox.classList.remove('hidden');
+          return;
+        }
+        setAuthUser(data.user, data.token);
+      } catch (_) {
+        setAuthUser({ full_name: payload.full_name, email: payload.email, username: payload.username, role: payload.role }, 'demo-token');
+      }
+      document.getElementById('authModal').classList.add('hidden');
+      e.target.reset();
+      showToast("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
+    });
+
+    document.getElementById('tgQuickDemoBtn').addEventListener('click', () => {
+      setAuthUser({ full_name: 'Telegram User', username: 'masofly_user', role: 'freelancer' }, 'tg-demo');
+      document.getElementById('authModal').classList.add('hidden');
+      showToast('Telegram orqali hisobga kirdingiz!');
+    });
+
+    updateAuthUI();
+
+    document.getElementById('searchInput').addEventListener('input', e => {
+      state.search = e.target.value;
+      renderJobs();
+    });
+
+    document.querySelectorAll('.quick-tag').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.search = btn.dataset.tag;
+        document.getElementById('searchInput').value = btn.dataset.tag;
+        if (state.view === 'miniapp') switchView('jobs');
+        else renderJobs();
+      });
+    });
+
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.category = btn.dataset.cat;
+        updateCategoryButtons();
+        renderJobs();
+      });
+    });
+
+    document.getElementById('remoteOnlyToggle').addEventListener('change', e => {
+      state.remoteOnly = e.target.checked;
+      renderJobs();
+    });
+
+    document.getElementById('juniorToggle').addEventListener('change', e => {
+      state.juniorOnly = e.target.checked;
+      renderJobs();
+    });
+
+    document.getElementById('sortSelect').addEventListener('change', e => {
+      state.sort = e.target.value;
+      renderJobs();
+    });
+
+    document.getElementById('clearFiltersBtn').addEventListener('click', resetAllFilters);
+    document.getElementById('emptyResetBtn').addEventListener('click', resetAllFilters);
+
+    // Delegated clicks for job cards & save buttons
+    document.addEventListener('click', e => {
+      const saveBtn = e.target.closest('.save-btn');
+      if (saveBtn) {
+        const id = saveBtn.dataset.saveId;
+        if (state.savedIds.has(id)) {
+          state.savedIds.delete(id);
+          showToast("Saqlanganlardan olib tashlandi");
+        } else {
+          state.savedIds.add(id);
+          showToast("Vakansiya saqlandi");
+        }
+        persistState();
+        renderStats();
+        renderJobs();
+        return;
+      }
+
+      const openTrigger = e.target.closest('.job-open-trigger');
+      if (openTrigger) {
+        openJobModal(openTrigger.dataset.jobId);
+      }
+    });
+
+    document.getElementById('closeJobModalBtn').addEventListener('click', () => {
+      document.getElementById('jobModal').classList.add('hidden');
+    });
+
+    document.getElementById('applyForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!state.activeJobId) return;
+      const payload = {
+        applicant_name: document.getElementById('applyName').value.trim(),
+        telegram_username: document.getElementById('applyTg').value.trim(),
+        portfolio_url: document.getElementById('applyPortfolio').value.trim(),
+        cover_note: document.getElementById('applyNote').value.trim()
+      };
+      try {
+        const res = await fetch(`/api/jobs/${encodeURIComponent(state.activeJobId)}/apply`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('API error');
+      } catch (_) {}
+
+      state.appliedIds.add(String(state.activeJobId));
+      persistState();
+      renderStats();
+      renderJobs();
+      renderMiniApp(document.getElementById('tgMiniSearch').value);
+      document.getElementById('jobModal').classList.add('hidden');
+      e.target.reset();
+      showToast("Arizangiz Telegram bot orqali yuborildi!");
+    });
+
+    // Post Modal
+    document.getElementById('openPostModalBtn').addEventListener('click', () => {
+      document.getElementById('postModal').classList.remove('hidden');
+    });
+    document.getElementById('closePostModalBtn').addEventListener('click', () => {
+      document.getElementById('postModal').classList.add('hidden');
+    });
+
+    document.getElementById('postJobForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const budgetVal = Number(document.getElementById('postBudget').value) || 200;
+      const rawTags = document.getElementById('postTags').value.split(',').map(s => s.trim()).filter(Boolean);
+      const tags = rawTags.length ? rawTags : ['Freelance', 'Remote'];
+      const payload = {
+        title: document.getElementById('postTitle').value.trim(),
+        company: document.getElementById('postCompany').value.trim() + ' • Yangi',
+        category: document.getElementById('postCategory').value,
+        budget: budgetVal,
+        remote: document.getElementById('postRemote').checked,
+        junior: document.getElementById('postJunior').checked,
+        tags,
+        description: document.getElementById('postDesc').value.trim()
+      };
+
+      let newJob = {
+        id: 'job-' + Date.now(),
+        title: payload.title,
+        company: payload.company,
+        category: payload.category,
+        budget: budgetVal,
+        budgetLabel: `$${budgetVal} • Loyiha`,
+        remote: payload.remote,
+        junior: payload.junior,
+        match: 95,
+        verified: true,
+        postedAt: 'Hozirgina',
+        tags,
+        desc: payload.description
+      };
+
+      try {
+        const res = await fetch('/api/jobs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.job) {
+            newJob.id = String(data.job.id);
+            newJob.budgetLabel = data.job.budget_label || newJob.budgetLabel;
+          }
+        }
+      } catch (_) {}
+
+      state.jobs.unshift(newJob);
+      document.getElementById('postModal').classList.add('hidden');
+      e.target.reset();
+      switchView('jobs');
+      renderStats();
+      showToast("Yangi vakansiya muvaffaqiyatli joylandi!");
+    });
+
+    // Mini App Search & Push
+    document.getElementById('tgMiniSearch').addEventListener('input', e => {
+      renderMiniApp(e.target.value);
+    });
+    document.getElementById('simulatePushBtn').addEventListener('click', () => {
+      const banner = document.getElementById('tgPushBanner');
+      banner.classList.remove('hidden');
+      showToast("Telegram bot xabarnomasi yuborildi!");
+    });
+
+    async function loadJobsFromApi() {
+      try {
+        const res = await fetch('/api/jobs');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (Array.isArray(data.jobs) && data.jobs.length) {
+          state.jobs = data.jobs.map(j => ({
+            id: String(j.id),
+            title: j.title,
+            company: j.company,
+            category: j.category,
+            budget: Number(j.budget) || 0,
+            budgetLabel: j.budget_label || `$${j.budget} • Loyiha`,
+            remote: Boolean(j.remote ?? j.is_remote),
+            junior: Boolean(j.junior ?? j.is_junior),
+            match: 93,
+            verified: true,
+            postedAt: 'Yangi',
+            tags: Array.isArray(j.tags) ? j.tags : [],
+            desc: j.description || j.desc || ''
+          }));
+          renderStats();
+          renderJobs();
+          if (state.view === 'miniapp') renderMiniApp(document.getElementById('tgMiniSearch').value);
+        }
+      } catch (_) {}
+    }
+
+    // Init
+    renderStats();
+    renderJobs();
+    lucide.createIcons();
+    loadJobsFromApi();
+  </script>
+</body>
+</html>
